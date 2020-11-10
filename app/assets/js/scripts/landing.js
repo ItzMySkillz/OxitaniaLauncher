@@ -343,7 +343,7 @@ function asyncSystemScan(mcVersion, launchAfter = true){
                         //$('#overlayDismiss').toggle(false)
                         setOverlayContent(
                             'Java is Required<br>to Launch',
-                            'A valid x64 installation of Java 8 is required to launch.<br><br>Please refer to our <a href="https://github.com/dscalzi/HeliosLauncher/wiki/Java-Management#manually-installing-a-valid-version-of-java">Java Management Guide</a> for instructions on how to manually install Java.',
+                            'A valid x64 installation of Java 8 is required to launch.',
                             'I Understand',
                             'Go Back'
                         )
@@ -389,7 +389,7 @@ function asyncSystemScan(mcVersion, launchAfter = true){
                 // User will have to follow the guide to install Java.
                 setOverlayContent(
                     'Unexpected Issue:<br>Java Download Failed',
-                    'Unfortunately we\'ve encountered an issue while attempting to install Java. You will need to manually install a copy. Please check out our <a href="https://github.com/dscalzi/HeliosLauncher/wiki">Troubleshooting Guide</a> for more details and instructions.',
+                    'Unfortunately we\'ve encountered an issue while attempting to install Java.',
                     'I Understand'
                 )
                 setOverlayHandler(() => {
@@ -696,7 +696,7 @@ function dlAsync(login = true){
                     data = data.trim()
                     if(data.indexOf('Impossible de trouver ou de charger la classe principale net.minecraft.launchwrapper.Launch') > -1){
                         loggerLaunchSuite.error('Le lancement du jeu a échoué, LaunchWrapper n\'a pas été téléchargé correctement.')
-                        showLaunchFailure('Erreur lors du lancement ',' Le fichier principal, LaunchWrapper, n\'a pas pu être téléchargé correctement. Par conséquent, le jeu ne peut pas se lancer. <br> <br> Pour résoudre ce problème, désactivez temporairement votre logiciel antivirus et relancez le jeu. <br> <br> Si vous avez le temps, veuillez <a href = "https : //github.com/dscalzi/HeliosLauncher/issues "> soumettez un problème </a> et indiquez-nous quel logiciel antivirus vous utilisez. Nous allons les contacter et essayer de redresser la situation.')
+                        showLaunchFailure('Erreur lors du lancement ',' Le fichier principal, LaunchWrapper, n\'a pas pu être téléchargé correctement. Par conséquent, le jeu ne peut pas se lancer. <br> <br> Pour résoudre ce problème, désactivez temporairement votre logiciel antivirus et relancez le jeu.')
                     }
                 }
 
