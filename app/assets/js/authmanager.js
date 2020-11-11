@@ -32,16 +32,14 @@ const AzuriomAuth = require('azuriom-auth');
 
 exports.addAccount = async function login(email, password) {
     const authenticator = new AzuriomAuth.Authenticator('https://oxitania.tk');
-  
     try {
-      const user = await authenticator.auth(email, password);
-      const ret = ConfigManager.addAuthAccount(uuidv3(user.username + machineIdSync(), uuidv3.DNS), 'Web AUTH', user.username, user.username)
-            if (ConfigManager.getClientToken() == null) {
-            ConfigManager.setClientToken('WEB AUTH')
-            }
-            ConfigManager.save()
-            return ret
-  
+        const user = await authenticator.auth(email, password);
+        const ret = ConfigManager.addAuthAccount(user.uuid, user.uuid, user.username, user.username)
+        if (ConfigManager.getClientToken() == null) {
+        ConfigManager.setClientToken(user.uuid)
+        }
+        ConfigManager.save()
+        return ret
     } catch (err) {
         return Promise.reject(err)
     }
@@ -56,7 +54,7 @@ exports.addAccount = async function login(email, password) {
 exports.removeAccount = async function (uuid) {
     try {
         const authAcc = ConfigManager.getAuthAccount(uuid)
-        await Mojang.invalidate(authAcc.accessToken, ConfigManager.getClientToken())
+        await authenticator.invalidate(authAcc.accessToken, ConfigManager.getClientToken())
         ConfigManager.removeAuthAccount(uuid)
         ConfigManager.save()
         return Promise.resolve()
@@ -77,10 +75,10 @@ exports.removeAccount = async function (uuid) {
  */
 exports.validateSelected = async function () {
     const current = ConfigManager.getSelectedAccount()
-    const isValid = await Mojang.validate(current.accessToken, ConfigManager.getClientToken())
+    const isValid = await authenticator.validate(current.accessToken, ConfigManager.getClientToken())
     if (!isValid) {
         try {
-            const session = await Mojang.refresh(current.accessToken, ConfigManager.getClientToken())
+            const session = await authenticator.refresh(current.accessToken, ConfigManager.getClientToken())
             ConfigManager.updateAuthAccount(current.uuid, session.accessToken)
             ConfigManager.save()
         } catch (err) {
